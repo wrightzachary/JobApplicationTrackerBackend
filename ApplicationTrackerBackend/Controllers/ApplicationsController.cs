@@ -42,7 +42,7 @@ namespace ApplicationTrackerBackend.Controllers
             return Ok(application);
         }
 
-        // POST api/<PostControlelr>
+        // POST api/<ApplicationsController>
         // CREATE A POST
         [HttpPost]
         public IActionResult Post([FromBody] Applications value)
@@ -52,24 +52,29 @@ namespace ApplicationTrackerBackend.Controllers
             return StatusCode(201, value);
         }
 
-        // PUT api/<PostController>/{id}
+        // PUT api/<ApplicationsController>/{id}
         // PUT POST
         [HttpPut("{id}")]
         public IActionResult Put(int id, [FromBody] Applications value)
         {
             var application = _context.Applications.FirstOrDefault(application => application.ApplicationsId == id);
-            application.ApplicationsId = value.ApplicationsId;
+            application.DateTime = value.DateTime;
+            application.JobTitle = value.JobTitle;
+            application.Company = value.Company;
+            application.Link = value.Link;
+            application.Status = value.Status;
+            application.Comments = value.Comments;
             _context.SaveChanges();
             return Ok(application);
         }
 
-        // DELETE api/<PostController>/{id}
+        // DELETE api/<ApplicationsController>/{id}
         // DELETE POST BY ID
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
-            var post = _context.Applications.FirstOrDefault(post => post.ApplicationsId == id);
-            _context.Remove(post);
+            var application = _context.Applications.FirstOrDefault(application => application.ApplicationsId == id);
+            _context.Remove(application);
             _context.SaveChanges();
             return Ok();
         }
