@@ -16,8 +16,43 @@ namespace ApplicationTrackerBackend.Migrations
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
-                .HasAnnotation("ProductVersion", "5.0.6")
+                .HasAnnotation("ProductVersion", "5.0.11")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+            modelBuilder.Entity("ApplicationTrackerBackend.Models.Applications", b =>
+                {
+                    b.Property<int>("ApplicationsId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Comments")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Company")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("DateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("JobTitle")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Link")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Status")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("ApplicationsId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Applications");
+                });
 
             modelBuilder.Entity("ApplicationTrackerBackend.Models.User", b =>
                 {
@@ -119,15 +154,15 @@ namespace ApplicationTrackerBackend.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "508e0848-e2ab-41b5-bd57-372275caf298",
-                            ConcurrencyStamp = "45bd35fc-0470-4d27-981d-643d33e0d94f",
+                            Id = "8a586e99-01f6-4085-9b1f-7e6b1f391729",
+                            ConcurrencyStamp = "a9ece3e0-8fa0-4910-b6f4-baec16de08fa",
                             Name = "User",
                             NormalizedName = "USER"
                         },
                         new
                         {
-                            Id = "1a851468-4697-48aa-829e-b23270ec02e0",
-                            ConcurrencyStamp = "395ca8ce-69f6-47d7-9eb7-f2209b95b28b",
+                            Id = "f08911c5-f249-4665-a30c-b296f99ada61",
+                            ConcurrencyStamp = "9bbe1321-c6a4-4026-a810-d0d8f35d12db",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         });
@@ -235,6 +270,15 @@ namespace ApplicationTrackerBackend.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens");
+                });
+
+            modelBuilder.Entity("ApplicationTrackerBackend.Models.Applications", b =>
+                {
+                    b.HasOne("ApplicationTrackerBackend.Models.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

@@ -12,7 +12,7 @@ namespace ApplicationTrackerBackend.Data
         {
 
         }
-
+        public DbSet <Applications> Applications { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
