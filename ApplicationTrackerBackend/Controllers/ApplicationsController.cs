@@ -44,9 +44,11 @@ namespace ApplicationTrackerBackend.Controllers
 
         // POST api/<ApplicationsController>
         // CREATE A POST
-        [HttpPost]
+        [HttpPost, Authorize]
         public IActionResult Post([FromBody] Applications value)
         {
+            var userId = User.FindFirstValue("id");
+            value.UserId = userId;
             _context.Applications.Add(value);
             _context.SaveChanges();
             return StatusCode(201, value);
